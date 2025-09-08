@@ -14,6 +14,12 @@ export class UserComponent {
   public selectedUser = DUMMY_USERS[randomIndex];
 
   get imagePath() {
-    return `assets/images/${this.selectedUser.avatar}`;
+    return `assets/users/${this.selectedUser.avatar}`;
+  }
+
+  onSelectUser() {
+    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+    this.selectedUser = DUMMY_USERS[randomIndex];
+    console.log('User selected:', this.selectedUser);
   }
 }
