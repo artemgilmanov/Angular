@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { NewTaskComponent } from './new-task/new-task.component';
-import { type NewTaskData } from './task/task.model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -11,59 +11,28 @@ import { type NewTaskData } from './task/task.model';
   styleUrl: './tasks.component.css',
 })
 export class TasksComponent {
-  @Input({ required: true }) userId!: string | undefined;
-  @Input({ required: true }) name!: string | undefined;
+  @Input({ required: true }) userId!: string;
+  @Input({ required: true }) name!: string;
 
   isAddingTask = false;
+  // property
+  // private _tasksService: TasksService;
 
-  tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Task 1',
-      date: '2023-01-01',
-      description: 'Description for Task 1',
-    },
-    {
-      id: 't2',
-      userId: 'u2',
-      title: 'Task 2',
-      date: '2023-01-02',
-      description: 'Description for Task 2',
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Task 3',
-      date: '2023-01-03',
-      description: 'Description for Task 3',
-    },
-  ];
-
-  get selectedUserTasks() {
-    return this.tasks.filter((task) => task.userId === this.userId);
+  // use service via dependency injection
+  constructor(private tasksService: TasksService) {
+    // Assign from contructor
+    // this._tasksService = tasksService;
   }
 
-  onTaskCompleted(taskId: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+  get selectedUserTasks() {
+    return this.tasksService.getUserTasks(this.userId!);
   }
 
   onStartAddTask() {
     this.isAddingTask = true;
   }
 
-  onCancelAddTask() {
-    this.isAddingTask = false;
-  }
-
-  onAddTask(taskData: NewTaskData) {
-    this.tasks.push({
-      id: Math.random().toString(),
-      userId: this.userId!,
-      title: taskData.title,
-      date: taskData.date,
-      description: taskData.summary,
-    });
+  onCloseAddTask() {
     this.isAddingTask = false;
   }
 }
