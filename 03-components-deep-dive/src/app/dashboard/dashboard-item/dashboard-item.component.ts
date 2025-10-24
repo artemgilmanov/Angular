@@ -6,6 +6,7 @@ import { Component, input, Input } from '@angular/core';
   imports: [],
   templateUrl: './dashboard-item.component.html',
   styleUrl: './dashboard-item.component.css',
+  host: { class: 'dashboard-item' },
 })
 export class DashboardItemComponent {
   // Option 1
